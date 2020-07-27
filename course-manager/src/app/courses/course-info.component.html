@@ -1,0 +1,22 @@
+<h2>Course Info</h2>
+<hr/>
+<form #courseForm="ngForm" *ngIf="course">
+    <div class="form-group row" *ngFor="let info of course | keyvalue;let index = index; trackBy:trackByIndex">
+        <label class="col-sm-2 col-from-label">{{info.key}}</label>
+        <div class="col-sm-10">
+            <input [(ngModel)]="course[info.key]" class="form-control"
+                [name]="info.key" [type]="evalType(course[info.key])" #courseInfo="ngModel"  
+                required [ngClass]="{'is-invalid': courseInfo.invalid}">
+
+            <div class="invalid-feedback">
+                <span>Course {{info.key}} is required.</span>
+            </div>
+        </div>
+    </div>
+
+    <button [disabled]="courseForm.invalid" (click)="save()" class="btn btn-primary mr-2">
+        Save 
+        <i class="fa fa-check faa-bounce animated text-success" [hidden]="!saveOk"></i>
+    </button>
+    <button [routerLink]="['/courses']" class="btn btn-secondary">Back</button>
+</form>
